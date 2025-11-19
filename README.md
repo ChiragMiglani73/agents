@@ -27,6 +27,7 @@ pip install pytest pytest-asyncio pyyaml
 
 # Run tests
 pytest tests/test_interruption_handler.py -v
+pytest tests/test_interruption_handler.py --cov=livekit.agents.interruption -v
 python test_agent_e2e.py
 ```
 
@@ -101,6 +102,29 @@ await handler.update_ignored_words(['okay', 'yeah'], append=True)
 - CPU: <1% impact
 - No VAD degradation
 
+## Known Issues
+
+**1. Homophone Confusion** (Very rare, <1% of cases)
+- Words starting with filler sounds may be misclassified (e.g., "umbrella" starts with "um")
+- Mitigation: Word boundary detection (future enhancement)
+
+**2. Rapid Language Switching** (Low impact, <5%)
+- Occasional misclassification in rapidly mixed-language speech
+- Mitigation: Multi-language STT with language tags
+
+**3. Memory Growth** (Manageable)
+- Event history grows unbounded (~10KB per 1000 events)
+- Mitigation: Rotation mechanism commented in code
+
+## Future Enhancements
+
+- Word boundary detection for homophone handling
+- Machine learning-based filler classification
+- Prosody analysis for context understanding
+- Automatic language detection
+- Emotion-aware interruption handling
+- History rotation for long-running sessions
+
 ## Files
 ```
 livekit-agents/livekit/agents/interruption/
@@ -112,8 +136,3 @@ tests/test_interruption_handler.py (30 tests)
 test_agent_e2e.py (E2E test)
 interruption_config.yaml (config template)
 ```
-
-## License
-
-Apache 2.0
-
