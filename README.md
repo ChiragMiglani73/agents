@@ -429,5 +429,5 @@ Apache 2.0 (same as LiveKit Agents)
 
 Chirag Miglani  
 Branch: feature/livekit-interrupt-handler-chiragmiglani  
-Submission Date: November 2024
+Submission Date: November 2025
 
